@@ -1,0 +1,186 @@
+
+package br.com.minic;
+
+import br.com.minic.elementos.*;
+
+/* Simbolos Terminais */
+
+terminal INCLUDE;
+terminal String INT, CHAR, FLOAT, DOUBLE;
+terminal MAIN, RETURN, IF, WHILE, PRINTF, PRINTINT, PRINTSTR, ELSE, VOID;
+terminal String IDENTIFICADOR;
+terminal Integer LITERAL_INTEIRO;
+terminal Double LITERAL_PONTO_FLUTUANTE;
+terminal char LITERAL_CHAR;
+terminal String LITERAL_STRING;
+terminal MENOR, MENOR_IGUAL, MAIOR, MAIOR_IGUAL, ATRIBUICAO, IGUAL, DIFERENTE, SOMA, SUB, DIV, MULT, VIRGULA;
+terminal ABRE_CHAVE, FECHA_CHAVE, ABRE_PARENTESES, FECHA_PARENTESES, JOGO_DA_VELHA, PONTO, PONTO_VIRGULA;
+terminal LETRA_H, NEGACAO;
+
+/* Simbolos Não Terminais */
+
+non terminal ProgramaMiniC ProgramaMiniC;
+non terminal java.util.List<Declinclude> DeclIncludeOpt;
+non terminal java.util.List<Declinclude> DeclIncludeList;
+non terminal Declinclude DeclInclude;
+non terminal java.util.List<DeclaracaoFuncao> DeclFuncoesOpt;
+non terminal java.util.List<DeclaracaoFuncao> DeclFuncoesList;
+non terminal DeclaracaoFuncao DeclFuncao;
+non terminal java.util.List<DeclaracaoParametro> ParametrosDeclaracaoOpt;
+non terminal java.util.List<DeclaracaoParametro> ParametrosDeclaracao;
+non terminal java.util.List<DeclaracaoParametro> RestoListaArgumentos;
+non terminal FuncaoMain FuncaoMain;
+non terminal ComandosOpt;
+non terminal ComandosList;
+non terminal Comando;
+non terminal String Tipo;
+non terminal TipoMain TipoMain;
+non terminal ExpressaoRelacional;
+non terminal ExpressaoRelacionalAux;
+non terminal OperadorRelacional;
+non terminal DeclIDOpt;
+non terminal IExpressao ExpressaoAtr;
+non terminal IExpressao ExpressaoAritmetica;
+non terminal IExpressao T, F;
+non terminal IExpressao Expressao;
+non terminal ParametrosOpt, Parametros, RestoParametros;
+non terminal DeclIDAtrOpt, DeclIDAtrs, DeclIDAtr;
+non terminal TipoRetorno RETURNOpt;
+non terminal TipoMain TipoExpressao;
+
+precedence left ELSE;
+
+/* Produções */
+
+start with ProgramaMiniC;
+
+ProgramaMiniC ::= DeclIncludeOpt FuncaoMain:funcaoMain DeclFuncoesOpt:declFuncoes {: RESULT = new ProgramaMiniC( funcaoMain, declFuncoes ); :};
+					   
+DeclIncludeOpt ::=	{: RESULT = null; : }
+			   | DeclIncludeList:includes {: RESULT = includes; :};
+				
+DeclIncludeList ::=	DeclInclude:declaracaoInclude {: RESULT = new 
+					java.util.ArrayList<Declinclude>();
+					RESULT.add(declaracaoInclude); :}		
+			    | DeclInclude:declInclude 
+			    DeclIncludeList:includes 
+			    {:RESULT = includes; RESULT.add(declInclude); :};
+			   			   
+DeclInclude ::= JOGO_DA_VELHA INCLUDE MENOR IDENTIFICADOR:identificador PONTO LETRA_H MAIOR {::};
+
+FuncaoMain ::= TipoMain:tipo MAIN ABRE_PARENTESES FECHA_PARENTESES ABRE_CHAVE ComandosOpt RETURNOpt:retorno FECHA_CHAVE {: RESULT = new FuncaoMain( tipo, retorno ); :};
+
+RETURNOpt ::= {: RESULT = null; :}
+		  | RETURN LITERAL_INTEIRO:li PONTO_VIRGULA {: RESULT = new TipoRetorno( "int", li ); :};
+		  
+TipoMain ::= INT {: RESULT = new TipoMain( "int" ); :}
+		 | VOID {: RESULT = new TipoMain( "void" ); :};
+	
+TipoExpressao ::= Tipo:tipo {: RESULT = new TipoMain( tipo ); :}
+			  | VOID {: RESULT = new TipoMain( "void" ); :};
+	 
+DeclFuncoesOpt ::= 	{: RESULT = null; :}
+				| DeclFuncoesList:funcoes {: RESULT = funcoes; :};
+
+DeclFuncoesList ::=	DeclFuncao:declFuncao {: RESULT = new java.util.ArrayList<DeclaracaoFuncao>(); RESULT.add( declFuncao ); :}		
+			    | DeclFuncao:declFuncao DeclFuncoesList:funcoes {: RESULT = funcoes; RESULT.add( declFuncao ); :};				
+
+DeclFuncao ::= TipoExpressao:tipo IDENTIFICADOR:identificador ABRE_PARENTESES ParametrosDeclaracaoOpt:parametros FECHA_PARENTESES ABRE_CHAVE ComandosOpt RETURN ExpressaoAtr:expressao PONTO_VIRGULA FECHA_CHAVE {: RESULT = new DeclaracaoFuncao( tipo, identificador, parametros, expressao ); :};
+
+ParametrosDeclaracaoOpt ::= {: RESULT = null; :}
+						  | ParametrosDeclaracao:parametros {: RESULT = parametros; :};
+						  
+ParametrosDeclaracao ::= Tipo:tipo IDENTIFICADOR:identificador RestoListaArgumentos:restoParametros {: 
+
+  RESULT = new java.util.ArrayList<DeclaracaoParametro>(); 
+  
+  RESULT.add( new DeclaracaoParametro( tipo, new Identificador( identificador ) ) ); 
+  
+  if( restoParametros != null ) { 
+   
+    RESULT.addAll( restoParametros ); 
+  
+  }  
+  
+:};
+
+RestoListaArgumentos ::= {: RESULT = null; :} 
+					 | VIRGULA ParametrosDeclaracao:restoParametros {: RESULT = restoParametros; :};
+
+Tipo ::= CHAR {: RESULT = "char"; :}
+	|    INT {: RESULT = "int"; :} 
+	|    FLOAT {: RESULT = "float"; :}
+	|    DOUBLE {: RESULT = "double"; :};
+					 
+ComandosOpt ::= {: RESULT = null; :}
+			|  ComandosList {::};
+			
+ComandosList ::= Comando {::}
+			 |   ComandosList Comando {::};		
+
+Comando ::= ABRE_CHAVE ComandosOpt FECHA_CHAVE {::} 
+		| IF ABRE_PARENTESES ExpressaoRelacional FECHA_PARENTESES Comando ELSE Comando {::}
+		| IF ABRE_PARENTESES ExpressaoRelacional FECHA_PARENTESES Comando {::}		
+		| WHILE ABRE_PARENTESES ExpressaoRelacional FECHA_PARENTESES Comando {::}
+		| PRINTF ABRE_PARENTESES Expressao FECHA_PARENTESES PONTO_VIRGULA {::}
+		| PRINTINT ABRE_PARENTESES Expressao FECHA_PARENTESES PONTO_VIRGULA {::}
+		| PRINTSTR ABRE_PARENTESES Expressao FECHA_PARENTESES PONTO_VIRGULA {::}
+		| IDENTIFICADOR ATRIBUICAO ExpressaoAtr PONTO_VIRGULA {::}
+		| Tipo IDENTIFICADOR DeclIDOpt PONTO_VIRGULA {::}
+		| Tipo IDENTIFICADOR ATRIBUICAO ExpressaoAtr DeclIDAtrOpt PONTO_VIRGULA {::};
+	
+DeclIDAtrOpt ::= {::} 
+	         | DeclIDAtrs {::};
+	   
+DeclIDAtrs ::= VIRGULA DeclIDAtr DeclIDAtrOpt {::};
+
+DeclIDAtr ::= IDENTIFICADOR ATRIBUICAO ExpressaoAtr {::};
+
+DeclIDOpt ::= {::}
+		  |   VIRGULA IDENTIFICADOR DeclIDOpt;
+	
+Expressao ::= {: RESULT = null; :}
+		  |   ExpressaoAtr: expATR {: RESULT = expATR; :}
+		  |   LITERAL_STRING:ls {: RESULT = new LiteralString( ls ); :};
+		  	  
+ExpressaoRelacional ::= ExpressaoRelacionalAux OperadorRelacional ExpressaoRelacionalAux {::}
+					|   ExpressaoRelacionalAux {::};
+					
+ExpressaoRelacionalAux ::= IDENTIFICADOR {::}
+                       |   LITERAL_INTEIRO {::}
+                       |   LITERAL_PONTO_FLUTUANTE {::}
+                       |   NEGACAO ABRE_PARENTESES ExpressaoRelacional FECHA_PARENTESES {::};
+
+OperadorRelacional ::= MAIOR {::}
+					| MAIOR_IGUAL {::}
+					| MENOR {::}
+					| MENOR_IGUAL {::}
+					| IGUAL {::}
+					| DIFERENTE {::};					
+
+ExpressaoAtr ::= ExpressaoAritmetica:expAritmetica  {: RESULT = expAritmetica; :}
+			  |  LITERAL_CHAR:lc {: RESULT = new LiteralChar( lc ); :};
+		  	  
+ExpressaoAritmetica ::= ExpressaoAritmetica:exp SOMA T:t {: RESULT = new ExpressaoBinaria( exp, "+", t ); :} 
+				     |  ExpressaoAritmetica:exp SUB T:t {: RESULT = new ExpressaoBinaria( exp, "-", t ); :}
+				     |  T:t {: RESULT = t; :};
+
+T ::= T:t MULT F:f {: RESULT = new ExpressaoBinaria( t, "*", f ); :}
+  |   T:t DIV F:f {: RESULT = new ExpressaoBinaria( t, "/", f ); :}
+  |   F:f {: RESULT = f; :};
+
+F ::= SUB F:f {: RESULT = new ExpressaoUnaria( "-", f ); :}
+  |	  ABRE_PARENTESES ExpressaoAritmetica:exp FECHA_PARENTESES {: RESULT = exp; RESULT.setEntreParenteses( true ); :} 
+  |   IDENTIFICADOR ABRE_PARENTESES ParametrosOpt FECHA_PARENTESES {::}
+  |   LITERAL_INTEIRO:li {: RESULT = new LiteralInteiro( li ); :}
+  |   LITERAL_PONTO_FLUTUANTE:lpf {: RESULT = new LiteralPontoFlutuante( lpf ); :}
+  |   IDENTIFICADOR:id {: RESULT = new Identificador( id ); :};  
+
+ParametrosOpt ::= {::}
+		       | Parametros {::};
+		       
+Parametros ::= ExpressaoAtr RestoParametros {::}
+		   |   LITERAL_STRING RestoParametros {::};
+
+RestoParametros ::= {::}
+	 		     | VIRGULA Parametros {::};
