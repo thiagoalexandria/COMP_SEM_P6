@@ -17,12 +17,12 @@ terminal MENOR, MENOR_IGUAL, MAIOR, MAIOR_IGUAL, ATRIBUICAO, IGUAL, DIFERENTE, S
 terminal ABRE_CHAVE, FECHA_CHAVE, ABRE_PARENTESES, FECHA_PARENTESES, JOGO_DA_VELHA, PONTO, PONTO_VIRGULA;
 terminal LETRA_H, NEGACAO;
 
-/* Simbolos Não Terminais */
+/* Simbolos Nao Terminais */
 
 non terminal ProgramaMiniC ProgramaMiniC;
-non terminal java.util.List<Declinclude> DeclIncludeOpt;
-non terminal java.util.List<Declinclude> DeclIncludeList;
-non terminal Declinclude DeclInclude;
+non terminal java.util.List<DeclInclude> DeclIncludeOpt;
+non terminal java.util.List<DeclInclude> DeclIncludeList;
+non terminal DeclInclude DeclInclude;
 non terminal java.util.List<DeclaracaoFuncao> DeclFuncoesOpt;
 non terminal java.util.List<DeclaracaoFuncao> DeclFuncoesList;
 non terminal DeclaracaoFuncao DeclFuncao;
@@ -50,23 +50,23 @@ non terminal TipoMain TipoExpressao;
 
 precedence left ELSE;
 
-/* Produções */
+/* Producoes */
 
 start with ProgramaMiniC;
 
 ProgramaMiniC ::= DeclIncludeOpt FuncaoMain:funcaoMain DeclFuncoesOpt:declFuncoes {: RESULT = new ProgramaMiniC( funcaoMain, declFuncoes ); :};
 					   
-DeclIncludeOpt ::=	{: RESULT = null; : }
+DeclIncludeOpt ::=	{: RESULT = null; :}
 			   | DeclIncludeList:includes {: RESULT = includes; :};
 				
 DeclIncludeList ::=	DeclInclude:declaracaoInclude {: RESULT = new 
-					java.util.ArrayList<Declinclude>();
-					RESULT.add(declaracaoInclude); :}		
+					java.util.ArrayList<DeclInclude>();
+					RESULT.add(declaracaoInclude); :}
 			    | DeclInclude:declInclude 
 			    DeclIncludeList:includes 
-			    {:RESULT = includes; RESULT.add(declInclude); :};
+			    {: RESULT = includes; RESULT.add(declInclude); :};
 			   			   
-DeclInclude ::= JOGO_DA_VELHA INCLUDE MENOR IDENTIFICADOR:identificador PONTO LETRA_H MAIOR {::};
+DeclInclude ::= JOGO_DA_VELHA INCLUDE MENOR IDENTIFICADOR:identificador PONTO LETRA_H MAIOR {: RESULT = new DeclInclude (identificador); :};
 
 FuncaoMain ::= TipoMain:tipo MAIN ABRE_PARENTESES FECHA_PARENTESES ABRE_CHAVE ComandosOpt RETURNOpt:retorno FECHA_CHAVE {: RESULT = new FuncaoMain( tipo, retorno ); :};
 
