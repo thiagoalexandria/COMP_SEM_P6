@@ -33,4 +33,10 @@ public class ComandoPrintf implements IComando{
 		  
 	  }
 
+	@Override
+	public void setEntreParenteses(boolean isEntreParenteses) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

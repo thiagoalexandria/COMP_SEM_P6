@@ -47,9 +47,20 @@ public class ExpressaoAtributicao implements IComando{
   @Override
 	
   public String toString() {
-	
-    return this.getIdentificador() + " = " + this.getExpressao();
+	  
+	  StringBuilder declaracaoAtr = new StringBuilder();
+	  declaracaoAtr.append(this.getIdentificador());
+	  declaracaoAtr.append(" = ");
+	  declaracaoAtr.append(this.getExpressao());
+      return declaracaoAtr.toString();
 	
   }
+
+
+@Override
+public void setEntreParenteses(boolean isEntreParenteses) {
+	// TODO Auto-generated method stub
+	
+}
   
 }

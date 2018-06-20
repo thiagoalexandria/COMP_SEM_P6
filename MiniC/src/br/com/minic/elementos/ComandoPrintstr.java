@@ -32,4 +32,10 @@ public class ComandoPrintstr implements IComando{
 		  return comandoprintsrt.toString();
 		  
 	  }
+
+	@Override
+	public void setEntreParenteses(boolean isEntreParenteses) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -39,6 +39,12 @@ public class ComandoWhile implements IComando{
 		  return comandowhile.toString();
 		  
 	  }
+
+	@Override
+	public void setEntreParenteses(boolean isEntreParenteses) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

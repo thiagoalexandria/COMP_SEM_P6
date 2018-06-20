@@ -57,6 +57,14 @@ public class ComandoIf implements IComando{
 			  return comandoif.toString();
 			  
 		  }
+
+
+
+		@Override
+		public void setEntreParenteses(boolean isEntreParenteses) {
+			// TODO Auto-generated method stub
+			
+		}
 		
 		
 		
