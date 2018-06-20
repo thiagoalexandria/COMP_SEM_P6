@@ -127,8 +127,8 @@ Comando ::= ABRE_CHAVE ComandosOpt FECHA_CHAVE {::}
 		| PRINTINT ABRE_PARENTESES Expressao:expressao FECHA_PARENTESES PONTO_VIRGULA {: RESULT = new ComandoPrintint (expressao); :}
 		| PRINTSTR ABRE_PARENTESES Expressao:expressao FECHA_PARENTESES PONTO_VIRGULA {: RESULT = new ComandoPrintstr (expressao); :}
 		| IDENTIFICADOR:identificador ATRIBUICAO ExpressaoAtr:expressao PONTO_VIRGULA {: RESULT = new ExpressaoAtributicao (expressao ); :}
-		| Tipo IDENTIFICADOR:identificador DeclIDOpt:declidopt PONTO_VIRGULA {: RESULT = new AtribuicaoId (identificador, declidopt); :}
-		| Tipo IDENTIFICADOR:identificador ATRIBUICAO ExpressaoAtr:expressao DeclIDAtrOpt:declatropt PONTO_VIRGULA {: RESULT = new Atribuicoes (identificador, expressao, declatropt); :};
+		| Tipo:tipo IDENTIFICADOR:identificador DeclIDOpt:declidopt PONTO_VIRGULA {: RESULT = new ComandoAtribuicaoId (tipo, identificador, declidopt); :}
+		| Tipo:tipo IDENTIFICADOR:identificador ATRIBUICAO ExpressaoAtr:expressao DeclIDAtrOpt:declatropt PONTO_VIRGULA {: RESULT = new Atribuicoes (tipo, identificador, expressao, declatropt); :};
 		
 	
 DeclIDAtrOpt ::= {::} 
