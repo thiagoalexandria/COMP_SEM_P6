@@ -5,13 +5,13 @@ public class DeclInclude {
 	
 	 // Atributos
 	
-	  private String identificador;  
+	private String identificador; 
 		   
 	  // Construtor
 
 	  public DeclInclude(String identificador){
 
-	    this.setIdentificador( identificador );
+		  this.setIdentificador( identificador );
 
 	    
 	  }  
@@ -20,24 +20,29 @@ public class DeclInclude {
 
 
 	  public String getIdentificador() {
-		
-	    return identificador;
+			
+		    return identificador;
 
-	  }
+		  }
 
 	  public void setIdentificador(String identificador) {
-		
-	    this.identificador = identificador;
+			
+		    this.identificador = identificador;
 
-	  }
+	  	  }
 	  
 	  	  
 
 	  @Override
 		
 	  public String toString() {
-		
-		  return "#include <" + this.getIdentificador() + ".h >";
+		  
+		  StringBuilder declarainclude = new StringBuilder();
+		  
+		  declarainclude.append( "#include <" );	
+		  declarainclude.append( this.getIdentificador());
+		  declarainclude.append( ".h>" );    
+		  return declarainclude.toString();
 	    
 	  }
 	  

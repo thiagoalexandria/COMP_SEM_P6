@@ -1,6 +1,6 @@
 package br.com.minic.elementos;
 
-public class ExpressaoAtributicao {
+public class ExpressaoAtributicao implements IComando{
 
   // Atributos
 	
@@ -18,7 +18,7 @@ public class ExpressaoAtributicao {
   }
 
   
-  // Métodos
+  // Mï¿½todos
   
   public Identificador getIdentificador() {
 	

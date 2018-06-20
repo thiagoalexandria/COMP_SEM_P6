@@ -30,8 +30,8 @@ non terminal java.util.List<DeclaracaoParametro> ParametrosDeclaracaoOpt;
 non terminal java.util.List<DeclaracaoParametro> ParametrosDeclaracao;
 non terminal java.util.List<DeclaracaoParametro> RestoListaArgumentos;
 non terminal FuncaoMain FuncaoMain;
-non terminal ComandosOpt;
-non terminal ComandosList;
+non terminal java.util.List<IComando> ComandosOpt;
+non terminal java.util.List<IComando> ComandosList;
 non terminal Comando;
 non terminal String Tipo;
 non terminal TipoMain TipoMain;
@@ -54,7 +54,7 @@ precedence left ELSE;
 
 start with ProgramaMiniC;
 
-ProgramaMiniC ::= DeclIncludeOpt FuncaoMain:funcaoMain DeclFuncoesOpt:declFuncoes {: RESULT = new ProgramaMiniC( funcaoMain, declFuncoes ); :};
+ProgramaMiniC ::= DeclIncludeOpt:declInclud FuncaoMain:funcaoMain DeclFuncoesOpt:declFuncoes {: RESULT = new ProgramaMiniC( declInclud ,funcaoMain, declFuncoes ); :};
 					   
 DeclIncludeOpt ::=	{: RESULT = null; :}
 			   | DeclIncludeList:includes {: RESULT = includes; :};
@@ -66,7 +66,7 @@ DeclIncludeList ::=	DeclInclude:declaracaoInclude {: RESULT = new
 			    DeclIncludeList:includes 
 			    {: RESULT = includes; RESULT.add(declInclude); :};
 			   			   
-DeclInclude ::= JOGO_DA_VELHA INCLUDE MENOR IDENTIFICADOR:identificador PONTO LETRA_H MAIOR {: RESULT = new DeclInclude (identificador); :};
+DeclInclude ::= JOGO_DA_VELHA INCLUDE MENOR IDENTIFICADOR:identificador PONTO LETRA_H MAIOR {: RESULT = new DeclInclude ( identificador ); :};
 
 FuncaoMain ::= TipoMain:tipo MAIN ABRE_PARENTESES FECHA_PARENTESES ABRE_CHAVE ComandosOpt RETURNOpt:retorno FECHA_CHAVE {: RESULT = new FuncaoMain( tipo, retorno ); :};
 
@@ -90,9 +90,7 @@ DeclFuncao ::= TipoExpressao:tipo IDENTIFICADOR:identificador ABRE_PARENTESES Pa
 ParametrosDeclaracaoOpt ::= {: RESULT = null; :}
 						  | ParametrosDeclaracao:parametros {: RESULT = parametros; :};
 						  
-ParametrosDeclaracao ::= Tipo:tipo IDENTIFICADOR:identificador RestoListaArgumentos:restoParametros {: 
-
-  RESULT = new java.util.ArrayList<DeclaracaoParametro>(); 
+ParametrosDeclaracao ::= Tipo:tipo IDENTIFICADOR:identificador RestoListaArgumentos:restoParametros {: RESULT = new java.util.ArrayList<DeclaracaoParametro>(); 
   
   RESULT.add( new DeclaracaoParametro( tipo, new Identificador( identificador ) ) ); 
   
@@ -112,22 +110,26 @@ Tipo ::= CHAR {: RESULT = "char"; :}
 	|    FLOAT {: RESULT = "float"; :}
 	|    DOUBLE {: RESULT = "double"; :};
 					 
+
 ComandosOpt ::= {: RESULT = null; :}
-			|  ComandosList {::};
+			|  ComandosList:comandos {: RESULT = comandos; :};
 			
-ComandosList ::= Comando {::}
-			 |   ComandosList Comando {::};		
+ComandosList ::= Comando:declaracaoComando {: RESULT = new 
+				 java.util.ArrayList<Comando>(); 
+				 RESULT.add(declaracaoComando); :}
+			 |   ComandosList:comandos Comando:declComandos {: RESULT = comandos; RESULT.add(declComandos); :};		
 
 Comando ::= ABRE_CHAVE ComandosOpt FECHA_CHAVE {::} 
-		| IF ABRE_PARENTESES ExpressaoRelacional FECHA_PARENTESES Comando ELSE Comando {::}
-		| IF ABRE_PARENTESES ExpressaoRelacional FECHA_PARENTESES Comando {::}		
-		| WHILE ABRE_PARENTESES ExpressaoRelacional FECHA_PARENTESES Comando {::}
-		| PRINTF ABRE_PARENTESES Expressao FECHA_PARENTESES PONTO_VIRGULA {::}
-		| PRINTINT ABRE_PARENTESES Expressao FECHA_PARENTESES PONTO_VIRGULA {::}
-		| PRINTSTR ABRE_PARENTESES Expressao FECHA_PARENTESES PONTO_VIRGULA {::}
-		| IDENTIFICADOR ATRIBUICAO ExpressaoAtr PONTO_VIRGULA {::}
-		| Tipo IDENTIFICADOR DeclIDOpt PONTO_VIRGULA {::}
-		| Tipo IDENTIFICADOR ATRIBUICAO ExpressaoAtr DeclIDAtrOpt PONTO_VIRGULA {::};
+		| IF ABRE_PARENTESES ExpressaoRelacional:expressaorel FECHA_PARENTESES Comando:comando ELSE Comando:comando2 {: RESULT = new ComandoIfElse ( expressaorel, comando, comando2 ); :}
+		| IF ABRE_PARENTESES ExpressaoRelacional:expressaorel FECHA_PARENTESES Comando:comando {: RESULT = new ComandoIf ( expressaorel, comando ); :}
+		| WHILE ABRE_PARENTESES ExpressaoRelacional:expressaorel FECHA_PARENTESES Comando:comando {: RESULT = new ComandoWhile (expressaorel, comando); :}
+		| PRINTF ABRE_PARENTESES Expressao:expressao FECHA_PARENTESES PONTO_VIRGULA {: RESULT = new ComandoPrintf (expressao); :}
+		| PRINTINT ABRE_PARENTESES Expressao:expressao FECHA_PARENTESES PONTO_VIRGULA {: RESULT = new ComandoPrintint (expressao); :}
+		| PRINTSTR ABRE_PARENTESES Expressao:expressao FECHA_PARENTESES PONTO_VIRGULA {: RESULT = new ComandoPrintstr (expressao); :}
+		| IDENTIFICADOR:identificador ATRIBUICAO ExpressaoAtr:expressao PONTO_VIRGULA {: RESULT = new ExpressaoAtributicao (expressao ); :}
+		| Tipo IDENTIFICADOR:identificador DeclIDOpt:declidopt PONTO_VIRGULA {: RESULT = new AtribuicaoId (identificador, declidopt); :}
+		| Tipo IDENTIFICADOR:identificador ATRIBUICAO ExpressaoAtr:expressao DeclIDAtrOpt:declatropt PONTO_VIRGULA {: RESULT = new Atribuicoes (identificador, expressao, declatropt); :};
+		
 	
 DeclIDAtrOpt ::= {::} 
 	         | DeclIDAtrs {::};

@@ -21,6 +21,8 @@ public class CompiladorMiniC {
 	ProgramaMiniC programaMiniC = (ProgramaMiniC) symbol.value;
 	
 	System.out.println( "\n  Programa MiniC: \n\n" + programaMiniC );
+	
+	
     
   }
   

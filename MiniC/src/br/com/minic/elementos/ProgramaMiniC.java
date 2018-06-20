@@ -6,21 +6,34 @@ import java.util.List;
 public class ProgramaMiniC {
 
   // Atributos
-
+  private List<DeclInclude> declInclude;
   private FuncaoMain funcaoMain;
   private List<DeclaracaoFuncao> declFuncoes;
 
   // Construtor
 
-  public ProgramaMiniC(FuncaoMain funcaoMain, List<DeclaracaoFuncao> declFuncoes) {
-
+  public ProgramaMiniC(List<DeclInclude> declInclude, FuncaoMain funcaoMain, List<DeclaracaoFuncao> declFuncoes) {
+	this.setDeclInclude( declInclude );
     this.setFuncaoMain( funcaoMain );
     this.setDeclFuncoes( declFuncoes );
     
   }
   
   
-  // Métodos
+  // Mï¿½todos
+  public List<DeclInclude> getDeclInclude() {
+		
+	    return declInclude;
+		
+  }
+
+  public void setDeclInclude(List<DeclInclude> declInclude) {
+		
+	    this.declInclude = declInclude;
+		
+  }
+
+  
   
   public FuncaoMain getFuncaoMain() {
 	
@@ -51,6 +64,16 @@ public class ProgramaMiniC {
   public String toString() {
 	
     StringBuilder programaMiniC = new StringBuilder();
+    
+    if( this.declInclude != null ) {
+    	
+        for(DeclInclude declInclude: this.declInclude) {
+        	  
+          programaMiniC.append( declInclude.toString() );
+          programaMiniC.append( "\n" );
+          
+        }
+    }
     
     programaMiniC.append( "\n" );
     
