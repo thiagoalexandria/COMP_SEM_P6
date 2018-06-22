@@ -2,33 +2,30 @@ package br.com.minic.elementos;
 
 public class DeclIdOpt {
 	
-	private Identificador identificador;
-    private String nome;
+	private Identificador id;
     
-    public Identificador getIdentificador() {
-        return identificador;
-    }
+	public Identificador getId() {
+		return id;
+	}
 
-    public void setIdentificador(Identificador identificador) {
-        this.identificador = identificador;
-    }
+	public void setId(Identificador id) {
+		this.id = id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    
-    @Override	
+	  public DeclIdOpt(Identificador id, DeclIdOpt declidopt){
+
+		  this.setId( id );
+
+	    
+	  } 
+
+	@Override	
     public String toString() {
     	
     	StringBuilder declaraidopt = new StringBuilder();
     	declaraidopt.append(",");
-    	declaraidopt.append(this.getIdentificador());
-    	declaraidopt.append(" ");
-    	declaraidopt.append(this.getNome());
+    	declaraidopt.append(this.getId());
         return declaraidopt.toString();
     }
 }

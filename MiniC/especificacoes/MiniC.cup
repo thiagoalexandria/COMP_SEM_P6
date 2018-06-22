@@ -37,7 +37,7 @@ non terminal String Tipo;
 non terminal TipoMain TipoMain;
 non terminal ExpRel ExpressaoRelacional;
 non terminal ExpressaoRelacionalAux;
-non terminal OperadorRelacional;
+non terminal String OperadorRelacional;
 non terminal DeclIdOpt DeclIDOpt;
 non terminal IExpressao ExpressaoAtr;
 non terminal IExpressao ExpressaoAritmetica;
@@ -149,25 +149,27 @@ RESULT = new java.util.ArrayList<DeclaracaoIdentificador>(); RESULT.add( declara
 
 DeclIDAtr ::= IDENTIFICADOR:id ATRIBUICAO ExpressaoAtr:exprAtr {: RESULT = new DeclaracaoIdentificador( new Identificador( id ), exprAtr ); :};
 
-	
+DeclIDOpt ::= {: RESULT = null; :}
+		  |   VIRGULA IDENTIFICADOR:id DeclIDOpt:declidopt {: RESULT = new DeclIdOpt (new Identificador(id), declidopt ); :};	
+		  
 Expressao ::= {: RESULT = null; :}
-		  |   ExpressaoAtr: expATR {: RESULT = expATR; :}
+		  |   ExpressaoAtr:expATR {: RESULT = expATR; :}
 		  |   LITERAL_STRING:ls {: RESULT = new LiteralString( ls ); :};
 		  	  
-ExpressaoRelacional ::= ExpressaoRelacionalAux OperadorRelacional ExpressaoRelacionalAux {::}
-					|   ExpressaoRelacionalAux {::};
+ExpressaoRelacional ::= ExpressaoRelacionalAux:exprelaux OperadorRelacional:operadorrelacional ExpressaoRelacionalAux:exprelaux {:RESULT = new ExpRel(exprelaux, operadorrelacional,exprelaux2):}
+					|   ExpressaoRelacionalAux:expresaorelacionalaux {: RESULT = expresaorelacionalaux; :};
 					
-ExpressaoRelacionalAux ::= IDENTIFICADOR {::}
-                       |   LITERAL_INTEIRO {::}
-                       |   LITERAL_PONTO_FLUTUANTE {::}
-                       |   NEGACAO ABRE_PARENTESES ExpressaoRelacional FECHA_PARENTESES {::};
+ExpressaoRelacionalAux ::= IDENTIFICADOR:Id {: RESULT = Identificador(id); :}
+                       |   LITERAL_INTEIRO:li {: RESULT = LiteralInteiro( li ); :}
+                       |   LITERAL_PONTO_FLUTUANTE:lpf {: LiteralPontoFlutuante( lpf );:}
+                       |   NEGACAO ABRE_PARENTESES ExpressaoRelacional:expressao FECHA_PARENTESES {:RESULT = ExpRel(expressao); :};
 
-OperadorRelacional ::= MAIOR {::}
-					| MAIOR_IGUAL {::}
-					| MENOR {::}
-					| MENOR_IGUAL {::}
-					| IGUAL {::}
-					| DIFERENTE {::};					
+OperadorRelacional ::= MAIOR {: RESULT = ">"; :}
+					| MAIOR_IGUAL {: RESULT = ">="; :}
+					| MENOR {: RESULT = "<"; :}
+					| MENOR_IGUAL {: RESULT = "<="; :}
+					| IGUAL {: RESULT = "=="; :}
+					| DIFERENTE {: RESULT = "=!"; :};					
 
 ExpressaoAtr ::= ExpressaoAritmetica:expAritmetica  {: RESULT = expAritmetica; :}
 			  |  LITERAL_CHAR:lc {: RESULT = new LiteralChar( lc ); :};
@@ -187,8 +189,8 @@ F ::= SUB F:f {: RESULT = new ExpressaoUnaria( "-", f ); :}
   |   LITERAL_PONTO_FLUTUANTE:lpf {: RESULT = new LiteralPontoFlutuante( lpf ); :}
   |   IDENTIFICADOR:id {: RESULT = new Identificador( id ); :};  
 
-ParametrosOpt ::= {::}
-		       | Parametros {::};
+ParametrosOpt ::= {: RESULT = null; :}
+		       | Parametros:parametros {: RESULT = parametros; :};
 		       
 Parametros ::= ExpressaoAtr RestoParametros {::}
 		   |   LITERAL_STRING RestoParametros {::};
