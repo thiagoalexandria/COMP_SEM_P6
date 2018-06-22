@@ -126,7 +126,7 @@ usando o trecho de código a seguir:
 
 ### 5. Informações Importantes
 	
-Data Entrega: 11/05/2018 (via Unipê virtual)
+Data Entrega: : 22/06/2018 (via Unipê virtual)
 	
 Equipe: INDIVIDUAL
 	
