@@ -4,15 +4,15 @@ public class ExpressaoAtributicao implements IComando{
 
   // Atributos
 	
-  private Identificador identificador;
+  private Identificador id;
   private IExpressao expressao;
  
   
   // Construtor
   
-  public ExpressaoAtributicao(Identificador identificador, IExpressao expressao) {
+  public ExpressaoAtributicao(Identificador id, IExpressao expressao) {
 	
-    this.setIdentificador( identificador );
+    this.setId( id );
     this.setExpressao( expressao );
     
   }
@@ -20,17 +20,15 @@ public class ExpressaoAtributicao implements IComando{
   
   // M�todos
   
-  public Identificador getIdentificador() {
-	
-    return identificador;
+  public Identificador getId() {
+	return id;
+}
 
-  }
 
-  public void setIdentificador(Identificador identificador) {
-	
-    this.identificador = identificador;
+public void setId(Identificador id) {
+	this.id = id;
+}
 
-  }
 
   public IExpressao getExpressao() {
 	
@@ -38,7 +36,8 @@ public class ExpressaoAtributicao implements IComando{
 
   }
 
-  public void setExpressao(IExpressao expressao) {
+
+public void setExpressao(IExpressao expressao) {
 	
     this.expressao = expressao;
 
@@ -49,7 +48,7 @@ public class ExpressaoAtributicao implements IComando{
   public String toString() {
 	  
 	  StringBuilder declaracaoAtr = new StringBuilder();
-	  declaracaoAtr.append(this.getIdentificador());
+	  declaracaoAtr.append(this.getId());
 	  declaracaoAtr.append(" = ");
 	  declaracaoAtr.append(this.getExpressao());
       return declaracaoAtr.toString();

@@ -32,13 +32,13 @@ non terminal java.util.List<DeclaracaoParametro> RestoListaArgumentos;
 non terminal FuncaoMain FuncaoMain;
 non terminal java.util.List<IComando> ComandosOpt;
 non terminal java.util.List<IComando> ComandosList;
-non terminal Comando;
+non terminal IComando Comando;
 non terminal String Tipo;
 non terminal TipoMain TipoMain;
-non terminal ExpressaoRelacional;
+non terminal ExpRel ExpressaoRelacional;
 non terminal ExpressaoRelacionalAux;
 non terminal OperadorRelacional;
-non terminal DeclIDOpt;
+non terminal DeclIdOpt DeclIDOpt;
 non terminal IExpressao ExpressaoAtr;
 non terminal IExpressao ExpressaoAritmetica;
 non terminal IExpressao T, F;
@@ -115,31 +115,40 @@ ComandosOpt ::= {: RESULT = null; :}
 			|  ComandosList:comandos {: RESULT = comandos; :};
 			
 ComandosList ::= Comando:declaracaoComando {: RESULT = new 
-				 java.util.ArrayList<Comando>(); 
+				 java.util.ArrayList<IComando>(); 
 				 RESULT.add(declaracaoComando); :}
 			 |   ComandosList:comandos Comando:declComandos {: RESULT = comandos; RESULT.add(declComandos); :};		
 
-Comando ::= ABRE_CHAVE ComandosOpt FECHA_CHAVE {::} 
-		| IF ABRE_PARENTESES ExpressaoRelacional:expressaorel FECHA_PARENTESES Comando:comando ELSE Comando:comando2 {: RESULT = new ComandoIfElse ( expressaorel, comando, comando2 ); :}
-		| IF ABRE_PARENTESES ExpressaoRelacional:expressaorel FECHA_PARENTESES Comando:comando {: RESULT = new ComandoIf ( expressaorel, comando ); :}
-		| WHILE ABRE_PARENTESES ExpressaoRelacional:expressaorel FECHA_PARENTESES Comando:comando {: RESULT = new ComandoWhile (expressaorel, comando); :}
-		| PRINTF ABRE_PARENTESES Expressao:expressao FECHA_PARENTESES PONTO_VIRGULA {: RESULT = new ComandoPrintf (expressao); :}
-		| PRINTINT ABRE_PARENTESES Expressao:expressao FECHA_PARENTESES PONTO_VIRGULA {: RESULT = new ComandoPrintint (expressao); :}
-		| PRINTSTR ABRE_PARENTESES Expressao:expressao FECHA_PARENTESES PONTO_VIRGULA {: RESULT = new ComandoPrintstr (expressao); :}
-		| IDENTIFICADOR:identificador ATRIBUICAO ExpressaoAtr:expressao PONTO_VIRGULA {: RESULT = new ExpressaoAtributicao (expressao ); :}
-		| Tipo:tipo IDENTIFICADOR:identificador DeclIDOpt:declidopt PONTO_VIRGULA {: RESULT = new ComandoAtribuicaoId (tipo, identificador, declidopt); :}
-		| Tipo:tipo IDENTIFICADOR:identificador ATRIBUICAO ExpressaoAtr:expressao DeclIDAtrOpt:declatropt PONTO_VIRGULA {: RESULT = new ComandoAtribuicaoIdexp (tipo, identificador, expressao, declatropt); :};
+Comando ::= ABRE_CHAVE ComandosOpt:comandosopt FECHA_CHAVE {: RESULT = new java.util.ArrayList<IComando>(); RESULT.add(comandosopt); :} 
+		| IF ABRE_PARENTESES ExpressaoRelacional:expressaorel FECHA_PARENTESES Comando:comando ELSE Comando:comando2 {: RESULT = new ComandoIfElse ( expressaorel, comando, comando2 ); RESULT.setEntreParenteses( true ); :}
+		| IF ABRE_PARENTESES ExpressaoRelacional:expressaorel FECHA_PARENTESES Comando:comando {: RESULT = new ComandoIf ( expressaorel, comando ); RESULT.setEntreParenteses( true ); :}
+		| WHILE ABRE_PARENTESES ExpressaoRelacional:expressaorel FECHA_PARENTESES Comando:comando {: RESULT = new ComandoWhile (expressaorel, comando); RESULT.setEntreParenteses( true ); :}
+		| PRINTF ABRE_PARENTESES Expressao:expressao FECHA_PARENTESES PONTO_VIRGULA {: RESULT = new ComandoPrintf (expressao); RESULT.setEntreParenteses( true );:}
+		| PRINTINT ABRE_PARENTESES Expressao:expressao FECHA_PARENTESES PONTO_VIRGULA {: RESULT = new ComandoPrintint (expressao); RESULT.setEntreParenteses( true ); :}
+		| PRINTSTR ABRE_PARENTESES Expressao:expressao FECHA_PARENTESES PONTO_VIRGULA {: RESULT = new ComandoPrintstr (expressao); RESULT.setEntreParenteses( true ); :}
+		| IDENTIFICADOR:id ATRIBUICAO ExpressaoAtr:expressao PONTO_VIRGULA {: RESULT = new ExpressaoAtributicao (new Identificador(id) , expressao ); RESULT.setEntreParenteses( false ); :}
+		| Tipo:tipo IDENTIFICADOR:id DeclIDOpt:declidopt PONTO_VIRGULA {: RESULT = new ComandoAtribuicaoId ( tipo, new Identificador(id) , declidopt); RESULT.setEntreParenteses( false ); :}
+		| Tipo:tipo IDENTIFICADOR:id ATRIBUICAO ExpressaoAtr:exprAtr DeclIDAtrOpt:declaracoesAtrOpt PONTO_VIRGULA {:
+			java.util.ArrayList<DeclaracaoIdentificador> declaracoesIdentificadores = new java.util.ArrayList<DeclaracaoIdentificador>();
+			DeclaracaoIdentificador declaracaoId = new DeclaracaoIdentificador( new Identificador( id ), exprAtr );
+			declaracoesIdentificadores.add( declaracaoId );
+			if( declaracoesAtrOpt != null ) {
+			declaracoesIdentificadores.addAll( declaracoesAtrOpt );
+			} RESULT = new ComandoDeclIdentificadores( tipo, declaracoesIdentificadores ); :};
 		
 	
-DeclIDAtrOpt ::= {::} 
-	         | DeclIDAtrs {::};
-	   
-DeclIDAtrs ::= VIRGULA DeclIDAtr DeclIDAtrOpt {::};
+DeclIDAtrOpt ::= {: RESULT = null; :} 
+| DeclIDAtrs:declaracoesAtr {: RESULT = declaracoesAtr; :}; 
 
-DeclIDAtr ::= IDENTIFICADOR ATRIBUICAO ExpressaoAtr {::};
+DeclIDAtrs ::= VIRGULA DeclIDAtr:declaracaoAtr DeclIDAtrOpt:declaracoesAtrOpt {:
+RESULT = new java.util.ArrayList<DeclaracaoIdentificador>(); RESULT.add( declaracaoAtr );
+	if( declaracoesAtrOpt != null ) { 
+		RESULT.addAll( declaracoesAtrOpt );
+	}
+:};
 
-DeclIDOpt ::= {::}
-		  |   VIRGULA IDENTIFICADOR DeclIDOpt;
+DeclIDAtr ::= IDENTIFICADOR:id ATRIBUICAO ExpressaoAtr:exprAtr {: RESULT = new DeclaracaoIdentificador( new Identificador( id ), exprAtr ); :};
+
 	
 Expressao ::= {: RESULT = null; :}
 		  |   ExpressaoAtr: expATR {: RESULT = expATR; :}

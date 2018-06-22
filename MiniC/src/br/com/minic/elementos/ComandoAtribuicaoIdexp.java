@@ -3,7 +3,7 @@ package br.com.minic.elementos;
 public class ComandoAtribuicaoIdexp implements IComando{
 
 	private String tipo;
-	private Identificador identificador;
+	private Identificador id;
 	private IExpressao expressao;
 	private DeclIdOpt declidopt;
 	
@@ -20,15 +20,6 @@ public class ComandoAtribuicaoIdexp implements IComando{
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-
-	public Identificador getIdentificador() {
-		return identificador;
-	}
-
-	public void setIdentificador(Identificador identificador) {
-		this.identificador = identificador;
-	}
-
 	public DeclIdOpt getDeclidopt() {
 		return declidopt;
 	}
@@ -37,9 +28,17 @@ public class ComandoAtribuicaoIdexp implements IComando{
 		this.declidopt = declidopt;
 	}
 
-	public ComandoAtribuicaoIdexp ( String tipo, Identificador identificador,IExpressao expressao, DeclIdOpt declidopt) {
+
+	public Identificador getId() {
+		return id;
+	}
+	public void setId(Identificador id) {
+		this.id = id;
+	}
+	
+	public ComandoAtribuicaoIdexp ( String tipo, Identificador id,IExpressao expressao, DeclIdOpt declidopt) {
 		this.setTipo(tipo);
-		this.setIdentificador(identificador);
+		this.setId(id);
 		this.setDeclidopt(declidopt);
 		this.setExpressao(expressao);
 		
@@ -50,7 +49,7 @@ public class ComandoAtribuicaoIdexp implements IComando{
 		
 		StringBuilder comandoatribuicaoexp = new StringBuilder();
 		comandoatribuicaoexp.append(this.getTipo());
-		comandoatribuicaoexp.append(this.getIdentificador());
+		comandoatribuicaoexp.append(this.getId());
 		comandoatribuicaoexp.append(this.getExpressao());
 		comandoatribuicaoexp.append(this.getDeclidopt());
 		comandoatribuicaoexp.append(";");
