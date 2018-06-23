@@ -2,18 +2,18 @@ package br.com.minic.elementos;
 
 public class ComandoWhile implements IComando{
 	
-	private ExpRel expressao;
+	private IExpressao expressao;
 	private IComando comando;
 	
-	public ComandoWhile (ExpRel expressao, IComando comando) {
+	public ComandoWhile (IExpressao expressao, IComando comando) {
 		this.setExpressao(expressao);
 		this.setComando(comando);
 	}
 	
-	public ExpRel getExpressao() {
+	public IExpressao getExpressao() {
 		return expressao;
 	}
-	public void setExpressao(ExpRel expressao) {
+	public void setExpressao(IExpressao expressao) {
 		this.expressao = expressao;
 	}
 	public IComando getComando() {

@@ -1,9 +1,11 @@
 package br.com.minic.elementos;
 
-public class DeclaracaoIdentificador {
+import java.util.List;
+
+public class DeclaracaoIdentificador implements IExpressao{
 	
 	private Identificador id;
-	private IExpressao expressao;
+	private List<IExpressao> expressao;
 	
 	public Identificador getId() {
 		return id;
@@ -11,16 +13,16 @@ public class DeclaracaoIdentificador {
 	public void setId(Identificador id) {
 		this.id = id;
 	}
-	public IExpressao getExpressao() {
+	public List<IExpressao> getExpressao() {
 		return expressao;
 	}
-	public void setExpressao(IExpressao expressao) {
+	public void setExpressao(List<IExpressao> expressao) {
 		this.expressao = expressao;
 	}
 	
-	public DeclaracaoIdentificador (Identificador id, IExpressao expressao) {
+	public DeclaracaoIdentificador (Identificador id, List<IExpressao> exprAtr) {
 		this.setId(id);
-		this.setExpressao(expressao);
+		this.setExpressao(exprAtr);
 		
 	}
 	
@@ -35,5 +37,10 @@ public class DeclaracaoIdentificador {
     	
         return declaraid.toString();
     }
+	@Override
+	public void setEntreParenteses(boolean isEntreParenteses) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

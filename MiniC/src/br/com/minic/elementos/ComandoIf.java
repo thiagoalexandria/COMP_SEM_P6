@@ -4,12 +4,12 @@ public class ComandoIf implements IComando{
 	
 	// Atributos
 	
-		private ExpRel expressaorel; 
+		private IExpressao expressaorel; 
 		private IComando comando;
 		
 
 		// Construtor
-		public ComandoIf(ExpRel expressaorel, IComando comando){
+		public ComandoIf(IExpressao expressaorel, IComando comando){
 			
 			this.setExpressaorel (expressaorel);
 			this.setComando (comando);
@@ -19,14 +19,14 @@ public class ComandoIf implements IComando{
 		
 		
 		// Gets e Sets
-		public ExpRel getExpressaorel() {
+		public IExpressao getExpressaorel() {
 			return expressaorel;
 		}
 
 
 
-		public void setExpressaorel(ExpRel expressaorel) {
-			this.expressaorel = expressaorel;
+		public void setExpressaorel(IExpressao expressaorel2) {
+			this.expressaorel = expressaorel2;
 		}
 
 
