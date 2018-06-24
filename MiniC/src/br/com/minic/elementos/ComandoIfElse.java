@@ -1,91 +1,55 @@
 package br.com.minic.elementos;
 
-public class ComandoIfElse implements IComando{
+public class ComandoIfElse implements IComando {
 	
-	// Atributos
-	
-	private IExpressao expressaorel; 
-	private IComando comando;
-	private IComando comando2;
-	
+	IExpressao expRelacional;
+	IComando codIF, codElse;
 
-	// Construtor
-	public ComandoIfElse(IExpressao expressaorel, IComando comando, IComando comando2){
+	public ComandoIfElse(IExpressao expRelacional, IComando codIF, IComando codElse) {
+		setExpRelacional(expRelacional);
+		setCodIF(codIF);
+		setCodElse(codElse);
+	}
+
+	public IExpressao getExpRelacional() {
+		return expRelacional;
+	}
+
+	public void setExpRelacional(IExpressao expRelacional) {
+		this.expRelacional = expRelacional;
+	}
+
+	public IComando getCodIF() {
+		return codIF;
+	}
+
+	public void setCodIF(IComando codIF) {
+		this.codIF = codIF;
+	}
+
+	public IComando getCodElse() {
+		return codElse;
+	}
+
+	public void setCodElse(IComando codElse) {
+		this.codElse = codElse;
+	}
+	
+	public String toString() {
+		StringBuilder comandoifelse = new StringBuilder();
 		
-		this.setExpressaorel (expressaorel);
-		this.setComando (comando);
-		this.setComando2 (comando2);
+		comandoifelse.append("if (" + this.getExpRelacional() + ") \n");
+		comandoifelse.append("  " + this.getCodIF() + ";\n");	
+		comandoifelse.append("else \n" );
+		comandoifelse.append("  " +  this.getCodElse().toString() );
 		
-	  }  
-
-	
-	
-	// Gets e Sets
-	public IExpressao getExpressaorel() {
-		return expressaorel;
+	    return comandoifelse.toString();
 	}
-
-
-
-	public void setExpressaorel(IExpressao expressaorel) {
-		this.expressaorel = expressaorel;
-	}
-
-
-
-	public IComando getComando() {
-		return comando;
-	}
-
-
-
-	public void setComando(IComando comando) {
-		this.comando = comando;
-	}
-
-
-
-	public IComando getComando2() {
-		return comando2;
-	}
-
-
-
-	public void setComando2(IComando comando2) {
-		this.comando2 = comando2;
-	}
-
-	
-	@Override
-	
-	  public String toString() {
-		  
-		  StringBuilder comandoifelse = new StringBuilder();
-		  
-		  comandoifelse.append( " if (" );
-		  comandoifelse.append( this.getExpressaorel());
-		  comandoifelse.append(")");
-		  comandoifelse.append("/n");
-		  comandoifelse.append(this.getComando());
-		  comandoifelse.append("/n");
-		  comandoifelse.append("else");
-		  comandoifelse.append("/n");
-		  comandoifelse.append(this.getComando2());
-		  comandoifelse.append("/n");
-		
-		  return comandoifelse.toString();
-		  
-	  }
-
-
 
 	@Override
-	public void setEntreParenteses(boolean isEntreParenteses) {
+	public void setEntreParenteses(boolean b) {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-	
-	
+
 }

@@ -1,31 +1,27 @@
 
 package br.com.minic.elementos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeclaracaoFuncao {
-
-  // Atributos
 	
   private TipoMain tipo;
-  private String identificador;
+  private Identificador identificador;
   private List<DeclaracaoParametro> parametros;
+  private ArrayList<IComando> ComOpt;
   private IExpressao expressao;
-  
-	   
-  // Construtor
 
-  public DeclaracaoFuncao(TipoMain tipo, String identificador, List<DeclaracaoParametro> parametros, 
-   IExpressao expressao) {
+  public DeclaracaoFuncao(TipoMain tipo, Identificador identificador, List<DeclaracaoParametro> parametros, 
+		  ArrayList<IComando> ComOpt, IExpressao expressao) {
 
     this.setTipo( tipo );
     this.setIdentificador( identificador );
     this.setParametros( parametros );
+    this.setComOpt(ComOpt);
     this.setExpressao( expressao );
     
   }  
-
-  // Métodos
 
   public TipoMain getTipo() {
 	
@@ -39,13 +35,13 @@ public class DeclaracaoFuncao {
 
   }
 
-  public String getIdentificador() {
+  public Identificador getIdentificador() {
 	
     return identificador;
 
   }
 
-  public void setIdentificador(String identificador) {
+  public void setIdentificador(Identificador identificador) {
 	
     this.identificador = identificador;
 
@@ -75,7 +71,15 @@ public class DeclaracaoFuncao {
 
   }
   
-  @Override
+  public ArrayList<IComando> getComOpt() {
+	return ComOpt;
+  }
+
+  public void setComOpt(ArrayList<IComando> comOpt) {
+	ComOpt = comOpt;
+  }
+
+@Override
 
   public String toString() {
 	
@@ -108,6 +112,15 @@ public class DeclaracaoFuncao {
     }
     
     declaracaoFuncao.append( ") {\n\n" );
+    
+    if( this.ComOpt != null ) {
+        for(IComando ComandoOptions: this.ComOpt) {
+
+            declaracaoFuncao.append( ComandoOptions.toString() );
+            declaracaoFuncao.append( "\n" );
+        
+        }
+    }
     
     declaracaoFuncao.append( "  return " );
     declaracaoFuncao.append( this.getExpressao().toString() );

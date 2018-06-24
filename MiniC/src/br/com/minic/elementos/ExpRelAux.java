@@ -1,24 +1,25 @@
 package br.com.minic.elementos;
 
-public class ExpRelAux implements IExpressao{
-	private IExpressao expressao;
+public class ExpRelAux implements IExpressao {
+
+	private IExpressao expRelAux;
 	
-	public ExpRelAux(IExpressao expressao) {
-		setExpressao(expressao);
+	public ExpRelAux(IExpressao expRelAux) {
+		setExpRelAux(expRelAux);
 	}
 
-	public IExpressao getExpressao() {
-		return expressao;
+	public IExpressao getExpRelAux() {
+		return expRelAux;
 	}
 
-	public void setExpressao(IExpressao expressao) {
-		this.expressao = expressao;
+	public void setExpRelAux(IExpressao expRelAux) {
+		this.expRelAux = expRelAux;
 	}
-
+	
 	public String toString() {
 		StringBuilder toString = new StringBuilder();
 		
-		toString.append(this.getExpressao());
+		toString.append(this.getExpRelAux());
 		
 	    return toString.toString();
 	}
@@ -28,5 +29,4 @@ public class ExpRelAux implements IExpressao{
 		// TODO Auto-generated method stub
 		
 	}
-
 }

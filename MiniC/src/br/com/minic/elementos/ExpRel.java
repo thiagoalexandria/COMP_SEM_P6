@@ -2,71 +2,57 @@ package br.com.minic.elementos;
 
 public class ExpRel implements IExpressao{
 
-	private IExpressao exprelaux;
-	private String operadorrelacional;
-	private IExpressao exprelaux2;
+    private boolean EntreParenteses;
+	private IExpressao expRelAux;
+	private String opREL;
+	private IExpressao expRelAux2;
 	
-	
-	
-	public IExpressao getExprelaux() {
-		return exprelaux;
-	}
-
-
-
-	public void setExprelaux(IExpressao exprelaux) {
-		this.exprelaux = exprelaux;
-	}
-
-
-
-	public String getOperadorrelacional() {
-		return operadorrelacional;
-	}
-
-
-
-	public void setOperadorrelacional(String operadorrelacional) {
-		this.operadorrelacional = operadorrelacional;
-	}
-
-
-
-	public IExpressao getExprelaux2() {
-		return exprelaux2;
-	}
-
-
-
-	public void setExprelaux2(IExpressao exprelaux2) {
-		this.exprelaux2 = exprelaux2;
-	}
-
-	
-	public ExpRel (IExpressao exprelaux,String operadorrelacional,IExpressao exprelaux2 ) {
-		this.setExprelaux(exprelaux);
-		this.setOperadorrelacional(operadorrelacional);
-		this.setExprelaux2(exprelaux2);
-	}
-	
-	  public String toString() {
-		  
-		  StringBuilder exprel = new StringBuilder();
-		  
-		  exprel.append( this.getExprelaux());	
-		  exprel.append( this.getOperadorrelacional() );
-		  exprel.append( this.getExprelaux());   
-		  return exprel.toString();
-	    
-	  }
-
-	@Override
-	public void setEntreParenteses(boolean isEntreParenteses) {
-		// TODO Auto-generated method stub
+	public ExpRel(IExpressao expRelAux, String opREL, IExpressao expRelAux2) {
+		this.setExpRelAux(expRelAux);
+		this.setOpREL(opREL);
+		this.setExpRelAux2(expRelAux2);
 		
 	}
 	
+	public boolean EntreParenteses() {
+        return EntreParenteses;
+    }
+
+    public void setEntreParenteses(boolean EntreParenteses) {
+        this.EntreParenteses = EntreParenteses;
+    }
 	
+	
+	
+	public IExpressao getExpRelAux() {
+		return expRelAux;
+	}
 
+	public void setExpRelAux(IExpressao expRelAux) {
+		this.expRelAux = expRelAux;
+	}
 
+	public String getOpREL() {
+		return opREL;
+	}
+
+	public void setOpREL(String opREL) {
+		this.opREL = opREL;
+	}
+
+	public IExpressao getExpRelAux2() {
+		return expRelAux2;
+	}
+
+	public void setExpRelAux2(IExpressao expRelAux2) {
+		this.expRelAux2 = expRelAux2;
+	}
+
+	public String toString() {
+		StringBuilder toString = new StringBuilder();
+		String retorno =this.expRelAux.toString() + " " + this.opREL + " " + this.expRelAux.toString();
+		toString.append(retorno);
+		
+	    return toString.toString();
+	}
 }

@@ -4,35 +4,29 @@ public class LiteralChar implements IExpressao {
 
   // Atributos
 	
-  private char valor;
+  private String valor;
 
   
   // Construtor
   
-  public LiteralChar(char valor) {
+  public LiteralChar(String valor) {
  
     this.setValor( valor );
 	
   }
 
   
-  // Métodos
+  // Mï¿½todos
   
-  public char getValor() {
+  public String getValor() {
 	
     return valor;
 
   }
 
-  public void setValor(char valor) {
+  public void setValor(String valor) {
 	
 	this.valor = valor;
-	
-  }
-
-  @Override
-	
-  public void setEntreParenteses(boolean isEntreParenteses) {
 	
   }
 	
@@ -43,5 +37,12 @@ public class LiteralChar implements IExpressao {
     return String.valueOf( this.getValor() );
 
   }
+
+
+@Override
+public void setEntreParenteses(boolean isEntreParenteses) {
+	// TODO Auto-generated method stub
+	
+}
 
 }

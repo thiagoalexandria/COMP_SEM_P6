@@ -1,42 +1,44 @@
 package br.com.minic.elementos;
 
-public class ComandoPrintint implements IComando{
+public class ComandoPrintint implements IComando {
+	private boolean EntreParenteses;
+	private IExpressao exp;
 	
-		private IExpressao expressao;
-		
-		public IExpressao getExpressao() {
-			return expressao;
-		}
+	public ComandoPrintint(IExpressao exp) {
+		setExp(exp);
+	}
 
-		public void setExpressao(IExpressao expressao) {
-			this.expressao = expressao;
-		}
+	public IExpressao getExp() {
+		return exp;
+	}
 
-		public ComandoPrintint (IExpressao expressao ) {
-			
-			this.setExpressao(expressao);
-		
-		}
-		
-		@Override
-		
-		  public String toString() {
-			  
-			  StringBuilder comandoprintint = new StringBuilder();
-			  
-			  comandoprintint.append( " printint (" );
-			  comandoprintint.append( this.getExpressao());
-			  comandoprintint.append(");");
-			  comandoprintint.append("/n");
-			 
-			  return comandoprintint.toString();
-			  
-		  }
+	public void setExp(IExpressao exp) {
+		this.exp = exp;
+	}
+	public boolean EntreParenteses() {
+        return EntreParenteses;
+    }
 
-		@Override
-		public void setEntreParenteses(boolean isEntreParenteses) {
-			// TODO Auto-generated method stub
-			
-		}
+    public void setEntreParenteses(boolean EntreParenteses) {
+        this.EntreParenteses = EntreParenteses;
+    }
+
+	
+	public String toString() {
+		StringBuilder comandoprintint = new StringBuilder();
+		
+		if(this.EntreParenteses){
+	        String retorno = "printf(" + this.exp.toString() + ");";
+	        comandoprintint.append(retorno);
+	    }
+	    else{
+	        String retorno = "printf" + this.exp.toString() + ";";
+	        comandoprintint.append(retorno);
+	    }
+	    
+	    return comandoprintint.toString();		
+	}
 
 }
+
+

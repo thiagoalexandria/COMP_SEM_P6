@@ -1,50 +1,44 @@
 package br.com.minic.elementos;
 
-public class ComandoWhile implements IComando{
+public class ComandoWhile implements IComando {
 	
-	private IExpressao expressao;
-	private IComando comando;
+	IComando codWHILE;
+	IExpressao expRelacional;
 	
-	public ComandoWhile (IExpressao expressao, IComando comando) {
-		this.setExpressao(expressao);
-		this.setComando(comando);
+	public ComandoWhile(IExpressao ExpRelacional, IComando codWHILE) {
+		setExpRelacional(expRelacional);
+		setCodWHILE(codWHILE);
+	}
+
+	public IExpressao getExpRelacional() {
+		return expRelacional;
+	}
+
+	public void setExpRelacional(IExpressao expRelacional) {
+		this.expRelacional = expRelacional;
+	}
+
+	public IComando getCodWHILE() {
+		return codWHILE;
+	}
+
+	public void setCodWHILE(IComando codWHILE) {
+		this.codWHILE = codWHILE;
 	}
 	
-	public IExpressao getExpressao() {
-		return expressao;
+	public String toString() {
+		StringBuilder toString = new StringBuilder();
+		
+		toString.append("while (" + this.getExpRelacional() + ") \n");
+		toString.append("  " + this.getCodWHILE() + ";");
+		
+	    return toString.toString();		
 	}
-	public void setExpressao(IExpressao expressao) {
-		this.expressao = expressao;
-	}
-	public IComando getComando() {
-		return comando;
-	}
-	public void setComando(IComando comando) {
-		this.comando = comando;
-	}
-	
-	@Override
-	
-	  public String toString() {
-		  
-		  StringBuilder comandowhile = new StringBuilder();
-		  
-		  comandowhile.append( " while (" );
-		  comandowhile.append( this.getExpressao());
-		  comandowhile.append(")");
-		  comandowhile.append("/n");
-		  comandowhile.append(this.getComando());
-		  comandowhile.append("/n");
-		 
-		  return comandowhile.toString();
-		  
-	  }
 
 	@Override
-	public void setEntreParenteses(boolean isEntreParenteses) {
+	public void setEntreParenteses(boolean b) {
 		// TODO Auto-generated method stub
 		
 	}
-	
 
 }

@@ -1,31 +1,42 @@
 package br.com.minic.elementos;
 
-public class DeclIdOpt {
+public class DeclIdOpt implements IExpressao {
 	
-	private Identificador id;
+	private Identificador identificador;
+	private IExpressao declidopt;
     
-	public Identificador getId() {
-		return id;
+    public DeclIdOpt(Identificador identificador, IExpressao declidopt) {
+    	setIdentificador(identificador);
 	}
 
-	public void setId(Identificador id) {
-		this.id = id;
+	public Identificador getIdentificador() {
+		return identificador;
 	}
 
+	public void setIdentificador(Identificador identificador) {
+		this.identificador = identificador;
+	}
+    
+    public IExpressao getDeclidopt() {
+		return declidopt;
+	}
 
-	  public DeclIdOpt(Identificador id, DeclIdOpt declidopt){
+	public void setDeclidopt(IExpressao declidopt) {
+		this.declidopt = declidopt;
+	}
 
-		  this.setId( id );
-
-	    
-	  } 
-
-	@Override	
-    public String toString() {
-    	
-    	StringBuilder declaraidopt = new StringBuilder();
-    	declaraidopt.append(",");
-    	declaraidopt.append(this.getId());
-        return declaraidopt.toString();
+	public String toString() {
+		StringBuilder toString = new StringBuilder();
+		
+		toString.append("," + this.getIdentificador());
+		toString.append("," + this.getDeclidopt());
+		
+	    return toString.toString();    	
     }
+
+	@Override
+	public void setEntreParenteses(boolean isEntreParenteses) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -20,16 +20,16 @@ public class LiteralPontoFlutuante implements IExpressao {
 
   @Override
 
-  public void setEntreParenteses(boolean isEntreParenteses) {
-	
-  }
-
-  @Override
-
   public String toString() {
 
     return String.valueOf(this.getValor());
 
   }
+
+@Override
+public void setEntreParenteses(boolean isEntreParenteses) {
+	// TODO Auto-generated method stub
+	
+}
 
 }

@@ -4,36 +4,19 @@ package br.com.minic.elementos;
 import java.util.List;
 
 public class ProgramaMiniC {
-
-  // Atributos
-  private List<DeclInclude> declInclude;
+	
   private FuncaoMain funcaoMain;
   private List<DeclaracaoFuncao> declFuncoes;
+  private List<DeclaracaoInclude> declIncludes;
 
-  // Construtor
 
-  public ProgramaMiniC(List<DeclInclude> declInclude, FuncaoMain funcaoMain, List<DeclaracaoFuncao> declFuncoes) {
-	this.setDeclInclude( declInclude );
+  public ProgramaMiniC(List<DeclaracaoInclude> declIncludes, FuncaoMain funcaoMain, List<DeclaracaoFuncao> declFuncoes) {
+
     this.setFuncaoMain( funcaoMain );
     this.setDeclFuncoes( declFuncoes );
-    
+    this.setDeclIncludes( declIncludes );
   }
-  
-  
-  // M�todos
-  public List<DeclInclude> getDeclInclude() {
-		
-	    return declInclude;
-		
-  }
-
-  public void setDeclInclude(List<DeclInclude> declInclude) {
-		
-	    this.declInclude = declInclude;
-		
-  }
-
-  
+ 
   
   public FuncaoMain getFuncaoMain() {
 	
@@ -58,23 +41,37 @@ public class ProgramaMiniC {
     this.declFuncoes = declFuncoes;
 	
   }
+  
+  public List<DeclaracaoInclude> getDeclIncludes() {
+	return declIncludes;
+  }
 
-  @Override
+
+  public void setDeclIncludes(List<DeclaracaoInclude> declIncludes) {
+	this.declIncludes = declIncludes;
+  }
+
+
+@Override
 	
   public String toString() {
 	
     StringBuilder programaMiniC = new StringBuilder();
     
-    if( this.declInclude != null ) {
+    programaMiniC.append( "\n" );
+    
+    if( this.declIncludes != null ) {
     	
-        for(DeclInclude declInclude: this.declInclude) {
+        for(DeclaracaoInclude declIncludes: this.declIncludes) {
         	  
-          programaMiniC.append( declInclude.toString() );
+          programaMiniC.append( declIncludes.toString() );
           programaMiniC.append( "\n" );
           
         }
-    }
+        
+      }
     
+    programaMiniC.append( "\n" );
     programaMiniC.append( "\n" );
     
     programaMiniC.append( this.funcaoMain.toString() );

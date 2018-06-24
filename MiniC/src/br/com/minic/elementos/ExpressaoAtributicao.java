@@ -1,18 +1,18 @@
 package br.com.minic.elementos;
 
-public class ExpressaoAtributicao implements IComando{
+public class ExpressaoAtributicao {
 
   // Atributos
 	
-  private Identificador id;
+  private Identificador identificador;
   private IExpressao expressao;
  
   
   // Construtor
   
-  public ExpressaoAtributicao(Identificador id, IExpressao expressao) {
+  public ExpressaoAtributicao(Identificador identificador, IExpressao expressao) {
 	
-    this.setId( id );
+    this.setIdentificador( identificador );
     this.setExpressao( expressao );
     
   }
@@ -20,15 +20,17 @@ public class ExpressaoAtributicao implements IComando{
   
   // M�todos
   
-  public Identificador getId() {
-	return id;
-}
+  public Identificador getIdentificador() {
+	
+    return identificador;
 
+  }
 
-public void setId(Identificador id) {
-	this.id = id;
-}
+  public void setIdentificador(Identificador identificador) {
+	
+    this.identificador = identificador;
 
+  }
 
   public IExpressao getExpressao() {
 	
@@ -36,8 +38,7 @@ public void setId(Identificador id) {
 
   }
 
-
-public void setExpressao(IExpressao expressao) {
+  public void setExpressao(IExpressao expressao) {
 	
     this.expressao = expressao;
 
@@ -46,20 +47,9 @@ public void setExpressao(IExpressao expressao) {
   @Override
 	
   public String toString() {
-	  
-	  StringBuilder declaracaoAtr = new StringBuilder();
-	  declaracaoAtr.append(this.getId());
-	  declaracaoAtr.append(" = ");
-	  declaracaoAtr.append(this.getExpressao());
-      return declaracaoAtr.toString();
+	
+    return this.getIdentificador() + " = " + this.getExpressao();
 	
   }
-
-
-@Override
-public void setEntreParenteses(boolean isEntreParenteses) {
-	// TODO Auto-generated method stub
-	
-}
   
 }

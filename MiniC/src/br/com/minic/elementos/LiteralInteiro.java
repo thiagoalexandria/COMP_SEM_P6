@@ -17,13 +17,6 @@ public class LiteralInteiro implements IExpressao {
 	public void setValor(int valor) {
 		this.valor = valor;
 	}
-
-	
-  @Override
-	
-  public void setEntreParenteses(boolean isEntreParenteses) {
-	
-  }
 	
   @Override
 
@@ -32,5 +25,11 @@ public class LiteralInteiro implements IExpressao {
     return String.valueOf(this.getValor());
 
   }
+
+@Override
+public void setEntreParenteses(boolean isEntreParenteses) {
+	// TODO Auto-generated method stub
+	
+}
 
 }

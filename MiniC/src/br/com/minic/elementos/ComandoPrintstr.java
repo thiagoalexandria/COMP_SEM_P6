@@ -1,40 +1,31 @@
 package br.com.minic.elementos;
 
-public class ComandoPrintstr implements IComando{
+public class ComandoPrintstr implements IComando {
 	
-	private IExpressao expressao;
+	IExpressao exp;
 	
-	public IExpressao getExpressao() {
-		return expressao;
+	public ComandoPrintstr(IExpressao exp) {
+		setExp(exp);
 	}
 
-	public void setExpressao(IExpressao expressao) {
-		this.expressao = expressao;
+	public IExpressao getExp() {
+		return exp;
 	}
 
-	public ComandoPrintstr (IExpressao expressao ) {
+	public void setExp(IExpressao exp) {
+		this.exp = exp;
+	}
+
+	public String toString() {
+		StringBuilder toString = new StringBuilder();
 		
-		this.setExpressao(expressao);
-	
+		toString.append("PrintSTR(" + this.getExp() + ");");
+		
+	    return toString.toString();		
 	}
-	
-	@Override
-	
-	  public String toString() {
-		  
-		  StringBuilder comandoprintsrt = new StringBuilder();
-		  
-		  comandoprintsrt.append( " printstr (" );
-		  comandoprintsrt.append( this.getExpressao());
-		  comandoprintsrt.append(");");
-		  comandoprintsrt.append("/n");
-		 
-		  return comandoprintsrt.toString();
-		  
-	  }
 
 	@Override
-	public void setEntreParenteses(boolean isEntreParenteses) {
+	public void setEntreParenteses(boolean b) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -16,7 +16,7 @@ public class LiteralString implements IExpressao {
   }
 
   
-  // Métodos
+  // Mï¿½todos
   
   public String getValor() {
 	
@@ -29,12 +29,6 @@ public class LiteralString implements IExpressao {
 	this.valor = valor;
 	
   }
-
-  @Override
-	
-  public void setEntreParenteses(boolean isEntreParenteses) {
-	
-  }
 	
   @Override
 
@@ -43,5 +37,12 @@ public class LiteralString implements IExpressao {
     return this.getValor();
 
   }
+
+
+@Override
+public void setEntreParenteses(boolean isEntreParenteses) {
+	// TODO Auto-generated method stub
+	
+}
 
 }

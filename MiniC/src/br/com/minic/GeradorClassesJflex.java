@@ -6,7 +6,7 @@ public class GeradorClassesJflex {
 
   public static void main(String[] args) {
 	
-    jflex.Main.generate( new File( "especificacoes/MiniC.flex" ) );
+    jflex.Main.generate( new File( "especificacoes/Minic.flex" ) );
 
 
   }

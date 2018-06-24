@@ -19,7 +19,7 @@ public class DeclaracaoParametro {
   }
 
 
-  // Metodos
+  // Métodos
 
   public String getTipo() {
 	

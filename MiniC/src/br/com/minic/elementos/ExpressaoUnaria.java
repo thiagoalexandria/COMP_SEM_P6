@@ -19,7 +19,7 @@ public class ExpressaoUnaria implements IExpressao {
   }
 
   
-  // Métodos
+  // Mï¿½todos
   
   public String getOperador() {
 	
@@ -50,14 +50,6 @@ public class ExpressaoUnaria implements IExpressao {
     return isEntreParenteses;
 
   }
-
-  @Override
-
-  public void setEntreParenteses(boolean isEntreParenteses) {
-	
-    this.isEntreParenteses = isEntreParenteses;
-
-  }
   
   @Override
 	
@@ -74,5 +66,12 @@ public class ExpressaoUnaria implements IExpressao {
 	}
 	
   }
+
+
+@Override
+public void setEntreParenteses(boolean isEntreParenteses) {
+	// TODO Auto-generated method stub
+	
+}
   
 }

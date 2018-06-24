@@ -1,31 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-// Programa Teste Projeto Compiladores
-
-/*
-
-  *** Autor: Hilario Tomaz
-  -- Data: 23/03/2018
-   
-*/
-
 int main()
 {
-
-	int valor1 = 12, valor2 = 15;
-    
     printint(fatorial(5));
-    
     return 1;
 }
 
 int fatorial(int n)
 {
     int res;
-    char n = 'i';
-    char i = '\n';
+    char n = 't';
+    char f = 'h';
+    char p = 'i';
+    char w = 'a';
+    char y = 'g';
+    char u = 'o';
+    char j = '\n';
+    
+    
 
     if (n < 1)
         res = 1.5;

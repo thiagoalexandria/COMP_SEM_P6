@@ -16,7 +16,7 @@ public class Identificador implements IExpressao {
   }
 
   
-  // Métodos
+  // Mï¿½todos
   
   public String getNome() {
 	
@@ -31,17 +31,18 @@ public class Identificador implements IExpressao {
   }
   
   @Override
-
-  public void setEntreParenteses(boolean isEntreParenteses) {
-	
-  }
-
-  @Override
 	
   public String toString() {
 	
     return this.getNome();
     
   }
+
+
+@Override
+public void setEntreParenteses(boolean isEntreParenteses) {
+	// TODO Auto-generated method stub
+	
+}
   
 }

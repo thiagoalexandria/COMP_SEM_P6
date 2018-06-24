@@ -1,46 +1,37 @@
 package br.com.minic.elementos;
 
-import java.util.List;
-
-public class DeclaracaoIdentificador implements IExpressao{
+public class DeclaracaoIdentificador {
 	
 	private Identificador id;
-	private List<IExpressao> expressao;
-	
+	private IExpressao expressao;
+		
+	public DeclaracaoIdentificador (Identificador id, IExpressao expressao) {
+		setId(id);
+		setExpressao(expressao);
+	}
+
 	public Identificador getId() {
 		return id;
 	}
+
 	public void setId(Identificador id) {
 		this.id = id;
 	}
-	public List<IExpressao> getExpressao() {
+
+	public IExpressao getExpressao() {
 		return expressao;
 	}
-	public void setExpressao(List<IExpressao> expressao) {
+
+	public void setExpressao(IExpressao expressao) {
 		this.expressao = expressao;
 	}
 	
-	public DeclaracaoIdentificador (Identificador id, List<IExpressao> exprAtr) {
-		this.setId(id);
-		this.setExpressao(exprAtr);
+	public String toString() {
+		StringBuilder toString = new StringBuilder();
 		
-	}
-	
-	
-	@Override	
-    public String toString() {
-    	
-    	StringBuilder declaraid = new StringBuilder();
-    	declaraid.append(this.getId());
-    	declaraid.append("=");
-    	declaraid.append(this.getExpressao());
-    	
-        return declaraid.toString();
-    }
-	@Override
-	public void setEntreParenteses(boolean isEntreParenteses) {
-		// TODO Auto-generated method stub
+		toString.append(this.getId());
+		toString.append(this.getExpressao());
 		
+	    return toString.toString();		
 	}
-	
 }

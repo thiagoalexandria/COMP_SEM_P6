@@ -74,7 +74,7 @@ COMENTARIO_MULTI_LINHAS = "/*"~"*/"
 {ID} { return new Symbol( sym.IDENTIFICADOR, yyline, yycolumn, yytext() ); }
 {LITERAL_INTEIRO} { return new Symbol( sym.LITERAL_INTEIRO, yyline, yycolumn, new Integer( yytext() ) ); }
 {LITERAL_PONTO_FLUTUANTE} { return new Symbol( sym.LITERAL_PONTO_FLUTUANTE, yyline, yycolumn, new Double( yytext() ) ); }
-{LITERAL_CHAR} { return new Symbol( sym.LITERAL_CHAR, yyline, yycolumn, yytext().charAt( 0 ) ); }
+{LITERAL_CHAR} { return new Symbol( sym.LITERAL_CHAR, yyline, yycolumn, yytext() ); }
 {LITERAL_STRING} { return new Symbol( sym.LITERAL_STRING, yyline, yycolumn, yytext() ); }
 
 {COMENTARIO_MULTI_LINHAS} {}
